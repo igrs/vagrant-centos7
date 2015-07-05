@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: "10.10.10.25"
 
   # provisioning shell
-  # config.vm.provision :shell, :path => "bootstrap.sh"
+  config.vm.provision :shell, :path => "bootstrap.sh"
 
   # sync src
   config.vm.synced_folder "./apps", "/var/apps"

@@ -15,6 +15,9 @@ rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 # repo mysql
 rpm -ivh http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
 
+# repo postgresql(specifid 9.4)
+rpm -ivh http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-1.noarch.rpm
+
 # repo nginx
 rpm -ivh http://nginx.org/packages/centos/7/x86_64/RPMS/nginx-1.8.0-1.el7.ngx.x86_64.rpm
 
@@ -39,6 +42,12 @@ systemctl enable nginx.service
 yum -y install mysql mysql-devel mysql-server mysql-utilities
 systemctl start mysqld.service
 systemctl enable mysqld.service
+
+## postgreql
+yum -y install postgresql94-server postgresql94-devel postgresql94-contrib
+/usr/pgsql-9.4/bin/postgresql94-setup initdb
+systemctl start postgresql-9.4.service
+systemctl enable postgresql-9.4.service
 
 ## git
 yum -y install git

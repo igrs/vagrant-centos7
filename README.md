@@ -1,5 +1,5 @@
 # vagrant-centos7
-vagrant setting for centOS 7.  
+vagrant setting for centOS 7.
 
 ## centOS 7
 use <https://vagrantcloud.com/hfm4/centos7>
@@ -13,5 +13,6 @@ use <https://vagrantcloud.com/hfm4/centos7>
 ## provisioning
 * nginx
 * mysql
+* postgreql(9.4)
 * php
 * git

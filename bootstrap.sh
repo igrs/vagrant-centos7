@@ -32,13 +32,13 @@ enabled=1
 NGINXREPO
 
 yum -y install nginx
-service nginx start
-chkconfig nginx on
+systemctl start nginx.service
+systemctl enable nginx.service
 
 ## mysql
 yum -y install mysql mysql-devel mysql-server mysql-utilities
-service mysqld start
-chkconfig mysqld on
+systemctl start mysqld.service
+systemctl enable mysqld.service
 
 ## git
 yum -y install git

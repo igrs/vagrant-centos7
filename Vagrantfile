@@ -21,6 +21,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # provisioning shell
   config.vm.provision :shell, :path => "bootstrap.sh"
+  if Vagrant.has_plugin?("vagrant-reload")
+    config.vm.provision :reload
+  else
+    config.vm.provision :shell, :inline => <<-CMD
+      echo 'You need restart vm.'
+    CMD
+  end
 
   # sync src
   config.vm.synced_folder "./apps", "/var/apps"

@@ -11,8 +11,11 @@ use <https://vagrantcloud.com/hfm4/centos7>
 * nginx <http://nginx.org/packages/centos/7/x86_64/RPMS/nginx-1.8.0-1.el7.ngx.x86_64.rpm>
 
 ## provisioning
-* nginx
+* zsh
+* git
+* apache
 * mysql
 * postgreql(9.4)
 * php
-* git
+* phalcon
+* phalcon-devtools

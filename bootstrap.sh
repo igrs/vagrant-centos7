@@ -18,25 +18,17 @@ rpm -ivh http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
 # repo postgresql(specifid 9.4)
 rpm -ivh http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-1.noarch.rpm
 
-# repo nginx
-rpm -ivh http://nginx.org/packages/centos/7/x86_64/RPMS/nginx-1.8.0-1.el7.ngx.x86_64.rpm
-
 ###############
 # yum install #
 ###############
+## zsh
+yum -y install zsh
+usermod -s /bin/zsh vagrant
 
-## nginx
-cat <<'NGINXREPO' >/etc/yum.repos.d/nginx.repo
-[nginx]
-name=nginx repo
-baseurl=http://nginx.org/packages/mainline/centos/7/$basearch/
-gpgcheck=0
-enabled=1
-NGINXREPO
-
-yum -y install nginx
-systemctl start nginx.service
-systemctl enable nginx.service
+## apache
+yum -y install httpd httpd-devel mod_ssl
+systemctl start httpd.service
+systemctl enable httpd.service
 
 ## mysql
 yum -y install mysql mysql-devel mysql-server mysql-utilities
@@ -57,3 +49,41 @@ yum -y install --enablerepo=remi --enablerepo=remi-php56 php php-opcache php-dev
 
 ## composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+## gcc
+yum -y install gcc
+
+## phalcon
+git clone --depth=1 git://github.com/phalcon/cphalcon.git
+cd cphalcon/build
+./install
+cat <<'PHALCONINI' >/etc/php.d/phalcon.ini
+extension=phalcon.so
+PHALCONINI
+
+## phalcon-devtools
+cd /home/vagrant
+echo '{"require": {"phalcon/devtools": "dev-master"}}' > composer.json
+/usr/local/bin/composer install
+mkdir -p /var/opt/phalcon/devtools
+mv /home/vagrant/vendor/phalcon/devtools/* /var/opt/phalcon/devtools
+ln -s /var/opt/phalcon/devtools/phalcon.php /usr/bin/phalcon
+chmod ugo+x /usr/bin/phalcon
+
+# firewall
+firewall-cmd --permanent --zone=public --add-service=http
+firewall-cmd --permanent --zone=public --add-service=https
+firewall-cmd --reload
+
+# conf
+## apache
+cp /vagrant/conf/httpd.conf /etc/httpd/conf/
+chmod 644 /etc/httpd/conf/httpd.conf
+
+# clean up
+yum clean all
+cd /home/vagrant/
+rm composer.json
+rm composer.lock
+rm -fr vendor
+rm -fr cphalcon

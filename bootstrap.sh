@@ -18,6 +18,9 @@ rpm -ivh http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
 # repo postgresql(specifid 9.4)
 rpm -ivh http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-1.noarch.rpm
 
+# repo nginx
+rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+
 ###############
 # yum install #
 ###############
@@ -32,6 +35,7 @@ systemctl enable httpd.service
 
 ## mysql
 yum -y install mysql mysql-devel mysql-server mysql-utilities
+cp /vagrant/conf/my.cnf /etc/
 systemctl start mysqld.service
 systemctl enable mysqld.service
 

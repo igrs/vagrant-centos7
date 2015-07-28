@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "https://vagrantcloud.com/hfm4/centos7"
 
   # hostname
-  config.vm.hostname = "igrs.centos7.jp"
+  config.vm.hostname = "vagrant.centos7.jp"
 
   # memory and cpus
   config.vm.provider "virtualbox" do |v|
